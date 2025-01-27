@@ -3,10 +3,11 @@
 namespace App\Exception {
 
     use Exception;
+    use Throwable;
 
     class UserDoesNotExistException extends Exception
     {
-        public function __construct($message = "User does not exist", $code = 0, Exception $previous = null)
+        public function __construct(string $message = "", int $code = 0, ?Throwable $previous = null)
         {
             parent::__construct($message, $code, $previous);
         }
