@@ -5,15 +5,17 @@ namespace App\Entity {
     class User
     {
         private ?int $id;
+        private static int $nextId = 1;
         private string $name;
         private string $email;
         private string $password;
 
-        public function __construct(?int $id, string $name, string $email)
+        public function __construct(?int $id, string $name, string $email, string $password = null)
         {
-            $this->id = $id;
+            $this->id = $id ?? self::$nextId++;
             $this->name = $name;
             $this->email = $email;
+            $this->password = password_hash($password, PASSWORD_BCRYPT);
         }
 
         public function getId(): ?int

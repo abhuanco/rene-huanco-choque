@@ -20,9 +20,12 @@ namespace App\Repository {
 
         public function update(User $user): void
         {
-            if (isset($this->users[$user->getId()])) {
-                $this->users[$user->getId()] = $user;
+            $id = $user->getId();
+            if (!$id || !isset($this->users[$id])) {
+                throw new \InvalidArgumentException("Cannot update non-existent user.");
             }
+            $this->users[$id] = $user;
+
         }
 
         public function delete(User $user): void
@@ -40,13 +43,11 @@ namespace App\Repository {
          */
         public function getByIdOrFail(int $id): User
         {
-            $user = $this->getById($id);
-
-            if (!$user) {
+            if (!isset($this->users[$id])) {
                 throw new UserDoesNotExistException("User with ID $id does not exist.");
             }
+            return $this->users[$id];
 
-            return $user;
         }
 
 
