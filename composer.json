@@ -1,7 +1,9 @@
 {
     "name": "rene-huanco-choque/prueba-tecnica-php",
     "description": "Prueba técnica PHP",
-    "require": {},
+    "require": {
+        "php-di/php-di": "^7.0"
+    },
 
     "require-dev": {
         "phpunit/phpunit": "11.5.3"

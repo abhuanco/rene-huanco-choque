@@ -4,51 +4,59 @@ namespace Tests {
 
     use PHPUnit\Framework\Attributes\Test;
     use PHPUnit\Framework\TestCase;
-    use App\Repository\UserRepository;
     use App\Entity\User;
-    use App\Exception\UserDoesNotExistException;
 
     class UserTest extends TestCase
     {
-        private UserRepository $userRepository;
-
-        protected function setUp(): void
+        #[Test]
+        public function constructorAndGetters(): void
         {
-            $this->userRepository = new UserRepository();
+            $id = 1;
+            $name = "John Doe";
+            $email = "johndoe@example.com";
+
+            $user = new User($id, $name, $email);
+
+            $this->assertEquals($id, $user->getId());
+            $this->assertEquals($name, $user->getName());
+            $this->assertEquals($email, $user->getEmail());
         }
 
         #[Test]
-        public function saveAndFindUser(): void
+        public function setName(): void
         {
-            $user = new User(1, 'John Doe', 'john@example.com');
-            $this->userRepository->save($user);
+            $user = new User(null, "John Doe", "johndoe@example.com");
+            $newName = "John Doe Colson";
 
-            $foundUser = $this->userRepository->getById(1);
-            $this->assertNotNull($foundUser);
-            $this->assertEquals('John Doe', $foundUser->getName());
+            $user->setName($newName);
+
+            $this->assertEquals($newName, $user->getName());
         }
 
         #[Test]
-        public function userNotFound(): void
+        public function setEmail(): void
         {
-            $this->assertNull($this->userRepository->getById(999));
+            $user = new User(null, "John Doe", "johndoe@example.com");
+            $newEmail = "john.doe@example.com";
+
+            $user->setEmail($newEmail);
+
+            $this->assertEquals($newEmail, $user->getEmail());
         }
 
         #[Test]
-        public function whenUserIsNotFoundByIdErrorIsThrown(): void
+        public function setPassword(): void
         {
-            $this->expectException(UserDoesNotExistException::class);
-            $this->userRepository->getByIdOrFail(999);
+            $user = new User(null, "John Doe", "johndoe@example.com");
+            $password = "Pa$$2w0rd!";
+
+            $user->setPassword($password);
+
+            $hashedPassword = $user->getPassword();
+
+            $this->assertNotEquals($password, $hashedPassword);
+            $this->assertTrue(password_verify($password, $hashedPassword));
         }
 
-        #[Test]
-        public function getByIdOrFailReturnsUser(): void
-        {
-            $user = new User(1, 'John Doe', 'john@example.com');
-            $this->userRepository->save($user);
-
-            $foundUser = $this->userRepository->getById(1);
-            $this->assertEquals('John Doe', $foundUser->getName());
-        }
     }
 }
