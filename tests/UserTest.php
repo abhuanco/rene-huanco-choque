@@ -15,7 +15,7 @@ namespace Tests {
             $name = "John Doe";
             $email = "johndoe@example.com";
 
-            $user = new User($id, $name, $email);
+            $user = new User($id, $name, $email, "Pa$$2w0rd!");
 
             $this->assertEquals($id, $user->getId());
             $this->assertEquals($name, $user->getName());
@@ -25,7 +25,7 @@ namespace Tests {
         #[Test]
         public function setName(): void
         {
-            $user = new User(null, "John Doe", "johndoe@example.com");
+            $user = new User(null, "John Doe", "johndoe@example.com", "Pa$$2w0rd!");
             $newName = "John Doe Colson";
 
             $user->setName($newName);
@@ -36,7 +36,7 @@ namespace Tests {
         #[Test]
         public function setEmail(): void
         {
-            $user = new User(null, "John Doe", "johndoe@example.com");
+            $user = new User(null, "John Doe", "johndoe@example.com", "Pa$$2w0rd!");
             $newEmail = "john.doe@example.com";
 
             $user->setEmail($newEmail);
@@ -47,10 +47,8 @@ namespace Tests {
         #[Test]
         public function setPassword(): void
         {
-            $user = new User(null, "John Doe", "johndoe@example.com");
             $password = "Pa$$2w0rd!";
-
-            $user->setPassword($password);
+            $user = new User(null, "John Doe", "johndoe@example.com", $password);
 
             $hashedPassword = $user->getPassword();
 

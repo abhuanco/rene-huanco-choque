@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repository {
 
@@ -7,8 +8,11 @@ namespace App\Repository {
     interface IUserRepository
     {
         public function save(User $user): void;
+
         public function update(User $user): void;
+
         public function delete(User $user): void;
+
         public function getById(int $id): ?User;
     }
 }
