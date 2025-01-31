@@ -15,8 +15,7 @@ namespace App\UseCase {
 
         public function execute(UserRequestDTO $request): void
         {
-            $user = new User(null, $request->name, $request->email);
-            $user->setPassword($request->password);
+            $user = new User(null, $request->name, $request->email, $request->password);
             $this->repository->save($user);
         }
     }

@@ -9,9 +9,25 @@ namespace Tests {
     use PHPUnit\Framework\Attributes\Test;
     use PHPUnit\Framework\TestCase;
 
+    /**
+     * UserRepositoryTest Class
+     *
+     * A PHPUnit test class to test the behavior of the `UserRepository` implementation.
+     * It ensures that the repository correctly handles:
+     * - Saving and retrieving users.
+     * - Updating an existing user.
+     * - Deleting a user.
+     * - Throwing exceptions when accessing non-existent users.
+     * - Retrieving all users in the repository.
+     */
     class UserRepositoryTest extends TestCase
     {
 
+        /**
+         * Test the `save` and `getById` methods of the `UserRepository`.
+         *
+         * Ensures that a user can be saved to the repository and then retrieved by its ID.
+         */
         #[Test]
         public function saveAndRetrieveUser(): void
         {
@@ -26,6 +42,12 @@ namespace Tests {
             $this->assertSame('john.doe@example.com', $savedUser->getEmail());
         }
 
+        /**
+         * Test the `update` method of the `UserRepository`.
+         *
+         * Ensures that a user's details can be updated and that the updated details
+         * persist in the repository.
+         */
         #[Test]
         public function updateUser(): void
         {
@@ -45,6 +67,11 @@ namespace Tests {
             $this->assertSame('jane.smith@example.com', $retrievedUser->getEmail());
         }
 
+        /**
+         * Test the `delete` method of the `UserRepository`.
+         *
+         * Ensures that a user can be deleted from the repository and that attempting to retrieve it afterward returns `null`.
+         */
         public function testDeleteUser(): void
         {
             $repository = new UserRepository();
@@ -59,6 +86,11 @@ namespace Tests {
             $this->assertNull($repository->getById(1));
         }
 
+        /**
+         * Test the `getByIdOrFail` method of the `UserRepository` for an existing user.
+         *
+         * Ensures that the method retrieves an existing user without throwing an exception.
+         */
         public function testGetByIdOrFailUserExists(): void
         {
             $repository = new UserRepository();
@@ -69,6 +101,11 @@ namespace Tests {
             $this->assertSame('Alice', $retrievedUser->getName());
         }
 
+        /**
+         * Test the `getByIdOrFail` method of the `UserRepository` for a non-existent user.
+         *
+         * Ensures that the method throws a `UserDoesNotExistException` when trying to retrieve a user that does not exist.
+         */
         public function testGetByIdOrFailThrowsException(): void
         {
             $repository = new UserRepository();
@@ -78,6 +115,11 @@ namespace Tests {
             $repository->getByIdOrFail(1);
         }
 
+        /**
+         * Test the `getAll` method of the `UserRepository`.
+         *
+         * Ensures that all users saved in the repository are retrieved as expected.
+         */
         public function testGetAll(): void
         {
             $repository = new UserRepository();
